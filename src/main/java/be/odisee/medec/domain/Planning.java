@@ -1,20 +1,21 @@
 package be.odisee.medec.domain;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
-
+@Entity
+@Table(name = "PLANNING")
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor(force=true)
 public class Planning {
 
     @Id
-    private final long plannerId;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private final long planningId;
 
-    private final String name;
+    private  String name;
+
 
 }
