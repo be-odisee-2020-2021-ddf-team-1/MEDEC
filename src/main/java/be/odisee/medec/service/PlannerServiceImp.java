@@ -23,9 +23,7 @@ public class PlannerServiceImp implements PlannerService {
     @Override
     public PlannerData prepareNewPlannerData(){
 
-        PlannerData plannerData = new PlannerData();
-
-        return plannerData;
+        return new PlannerData();
 
     }
 
@@ -76,8 +74,7 @@ public class PlannerServiceImp implements PlannerService {
 
     @Override
     public Planning getPlanningById(long planningId){
-        Planning planning = planningRepository.findByplanningId(planningId);
-        return planning;
+        return planningRepository.findByplanningId(planningId);
 
     }
 
@@ -89,11 +86,10 @@ public class PlannerServiceImp implements PlannerService {
     @Override
     public PlannerData preparePlannerDataToEdit(long plannerId){
         Planning planning = planningRepository.findByplanningId(plannerId);
-        PlannerData plannerData = prepareEditPlannerData(planning) ;
 
-    //  volgens vb van Hans , plannerData.SetPlannerId(plannerId) -> wrm ? want in prepareEdit setten wij al de meegeven ID ??
+        //  volgens vb van Hans , plannerData.SetPlannerId(plannerId) -> wrm ? want in prepareEdit setten wij al de meegeven ID ??
 
-        return plannerData;
+        return prepareEditPlannerData(planning);
 
     }
 

@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group">
-        <button class="btn btn-primary btn-md">Submit new Planning</button>
+        <button class="btn btn-primary btn-md" name="submit">Submit new Planning</button>
     </div>
 
 
@@ -36,5 +36,10 @@
     blablabla
 </div>
 
+<div class="table-striped well">
+    <div th:each="planning: ${plannings}">
+         <div th:text="${planning.name}"></div>
+    </div>
+</div>
 </body>
 </html>

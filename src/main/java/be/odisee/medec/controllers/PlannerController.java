@@ -1,11 +1,8 @@
 package be.odisee.medec.controllers;
 
-import be.odisee.medec.domain.Planning;
 import be.odisee.medec.formdata.PlannerData;
 import be.odisee.medec.service.PlannerService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -31,6 +28,7 @@ public class PlannerController {
     @GetMapping
     public String showPlanningForm(Model model){
         model.addAttribute("plannerData",plannerService.prepareNewPlannerData());
+        model.addAttribute("plannings",plannerService.getPlannings()) ;
         return "planning";
     }
 
@@ -45,8 +43,6 @@ public String planningEditForm(@RequestParam("planningId") long planningId, Mode
         return "planning";
 
 }
-
-
 
     @PostMapping(params = "submit") // refereer naar de submit button van de HTMLpagina
     public String processPlanningForm(@Valid PlannerData plannerData, Errors errors, Model model) {

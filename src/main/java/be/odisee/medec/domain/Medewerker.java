@@ -1,26 +1,26 @@
 package be.odisee.medec.domain;
 
-import lombok.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-    @Table(name ="PLANNING")
+@Table(name ="MEDEWERKER")
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(force=true)
-public class Planning {
+public class Medewerker {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private final long planningId;
+    private final long medewerkerId;
 
     private  String name;
 
-@OneToOne
-private final BesteldToestel besteldToestel;
+    private String functie;
 
-@OneToOne
-private final Medewerker medewerker;
 
 }
