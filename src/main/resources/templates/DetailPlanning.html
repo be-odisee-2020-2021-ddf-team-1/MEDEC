@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Your Planning details </title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<h1> Welcome To Planning </h1>
+
+<table class="table">
+    <tbody>
+
+    <tr>
+        <th scope="row">Id</th>
+        <td th:text="*{planningId}"></td>
+    </tr>
+    <tr>
+       <th scope="row">Name</th>
+        <td th:text="*{name}"></td>
+    </tr>
+    <tr>
+        <th scope="row">Actions</th>
+        <td> <a class="btn btn-warning" th:href=@"{/EditPlanning(param1='*{planningId}')}"></a></td>
+        <td> <a class="btn btn-danger" th:href=@"{/DeletePlanning(param1='*{planningId}')}"></a></td>
+    </tr>
+    </tbody>
+
+</table>
+<div class="mt-5">
+<a class="btn btn-primary" th:href="@{/}">return to overview</a>
+</div>
+
+</body>
+</html>

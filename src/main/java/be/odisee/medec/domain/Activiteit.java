@@ -29,6 +29,8 @@ public class Activiteit {
     private Time eindTijd;
 
     // hoe zullen wij de subtype mappen in ons DB.
+    // private String SubType ; subtype = Enum{TestActiviteit,Montage etc..}
+    // Domain Klasse => TestActiveteit -> properties. -/> SuperKlasse
 
     @OneToOne
     private final Medewerker medewerker;

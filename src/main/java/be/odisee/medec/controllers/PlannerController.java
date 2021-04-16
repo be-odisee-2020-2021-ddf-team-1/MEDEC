@@ -17,34 +17,65 @@ import javax.validation.Valid;
 @RequestMapping("/planning")
 public class PlannerController {
 
+
+    /*
+     Autowired zorgt voor onze dependancy injection van onze Service in onze controller
+     Alternatief als autoWired niet gebruiker is als volgens :
+
+     private final PlannerService plannerService;
+
+    public PlannerController(PlannerService plannerService) {
+        this.plannerService = plannerService;
+    }
+     */
+
     @Autowired
     private PlannerService plannerService;
 
-    @GetMapping("/")
-    public String home(){
-        return "home";
-    }
 
-    @GetMapping
-    public String showPlanningForm(Model model){
-        model.addAttribute("plannerData",plannerService.prepareNewPlannerData());
+    // Overview met alle planning
+    // Pagina voor aanmaken
+    // Pagina voor editen
+    // Deleten via actions geen nieuwe pagina
+    // Pagina voor details
+
+
+    // overview van alle planningen
+    @GetMapping("/")
+    public String showListPlanning(Model model){
         model.addAttribute("plannings",plannerService.getPlannings()) ;
         return "planning";
     }
 
-@GetMapping("/edit")
+    // Create pagina
+    @GetMapping("/CreatePlanning")
+    public String showCreatePlanningForm(Model model){
+        model.addAttribute("plannerData",plannerService.prepareNewPlannerData());
+        return "CreatePlanning";
+    }
 
-public String planningEditForm(@RequestParam("planningId") long planningId, Model model){
+    // Detail pagina
+    @GetMapping("/Detailsplanning")
+    public String showDetailPlanning(@RequestParam("planningId") long planningId, Model model){
+        model.addAttribute("plannerData",plannerService.getPlanningById(planningId));
+
+        return "DetailPlanning";
+    }
+
+
+    @GetMapping("/Editplanning")
+
+    public String planningEditForm(@RequestParam("planningId") long planningId, Model model){
 
         PlannerData plannerData = plannerService.preparePlannerDataToEdit(planningId);
         prepareForm(plannerData,model);
         model.addAttribute("message", "Update or Delete this planning - or cancel");
 
-        return "planning";
+        return "Editplanning";
 
 }
 
-    @PostMapping(params = "submit") // refereer naar de submit button van de HTMLpagina
+    @PostMapping("/CreatePlanning") // refereer naar de submit button van de HTMLpagina
     public String processPlanningForm(@Valid PlannerData plannerData, Errors errors, Model model) {
         String message = "";
 
@@ -64,7 +95,7 @@ public String planningEditForm(@RequestParam("planningId") long planningId, Mode
         prepareForm(plannerData, model);
         model.addAttribute("message", message);
 
-        return "planning";
+        return "CreatePlanning";
 
     }
 
@@ -75,7 +106,7 @@ public String planningEditForm(@RequestParam("planningId") long planningId, Mode
         PlannerData newPlannerData = plannerService.prepareNewPlannerData();
         prepareForm(newPlannerData,model);
         model.addAttribute("message", "Sucessfully deleted Entry" +plannerData.getName());
-        return "planning";
+        return "/planning";
     }
 
 

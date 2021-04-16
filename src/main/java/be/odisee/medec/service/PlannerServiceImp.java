@@ -15,7 +15,6 @@ public class PlannerServiceImp implements PlannerService {
 @Autowired
     PlanningRepository planningRepository;
 
-
      //Create operation
 
     // Lege plannerData (form)
@@ -27,6 +26,18 @@ public class PlannerServiceImp implements PlannerService {
 
     }
 
+
+    @Override
+    public PlannerData preparePlannerDataToEdit(long plannerId){
+        Planning planning = planningRepository.findByplanningId(plannerId);
+
+        //  volgens vb van Hans , plannerData.SetPlannerId(plannerId) -> wrm ? want in prepareEdit setten wij al de meegeven ID ??
+
+        return prepareEditPlannerData(planning);
+
+    }
+
+    // Van een model naar een ViewModel -> mapper
     @Override
     public PlannerData prepareEditPlannerData(Planning planning){
 
@@ -50,6 +61,10 @@ public class PlannerServiceImp implements PlannerService {
 
     // Create of Update
 
+    // Viewmodel -> model -> Db
+
+    // Valid viewmodel -> Dao-> om opteslaan in DV
+
     @Override
     public String CreatePlanner(@Valid PlannerData plannerData){
 
@@ -63,6 +78,7 @@ public class PlannerServiceImp implements PlannerService {
         {
             planning = planningRepository.findByplanningId(plannerData.getPlanningId());
         }
+
         planning.setName(plannerData.getName());
 
         planningRepository.save(planning);
@@ -83,16 +99,7 @@ public class PlannerServiceImp implements PlannerService {
         return planningRepository.findAllByOrderByName();
     }
 
-    @Override
-    public PlannerData preparePlannerDataToEdit(long plannerId){
-        Planning planning = planningRepository.findByplanningId(plannerId);
-
-        //  volgens vb van Hans , plannerData.SetPlannerId(plannerId) -> wrm ? want in prepareEdit setten wij al de meegeven ID ??
-
-        return prepareEditPlannerData(planning);
-
-    }
-
+    // Waarom ?
 
     // Delete operation
 

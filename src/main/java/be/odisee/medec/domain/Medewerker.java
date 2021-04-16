@@ -20,7 +20,7 @@ public class Medewerker {
 
     private  String name;
 
-    private String functie;
+    private String functie; // Tester, Planner, Monteur etc...
 
 
 }

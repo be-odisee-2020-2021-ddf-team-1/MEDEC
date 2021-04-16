@@ -3,42 +3,20 @@
       xmlns:th = "http://thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>New Planning</title>
+    <title>List of Plannings</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
 
-<h1> Welcome To Planning </h1>
+<h1> Welcome To an overview of all Plannings </h1>
 
-<form method="POST" th:action="@{/planning}" th:object="${plannerData}" >
-    <!-- Action is de request mapper vanuit de controller en Object is dan de naam van het model die wordt meegeven
-      BELANGRIJK dat de namen goed overeenkomen - case sensitive!!!
-      -->
-
-    <div class="form-group">
-        <label>Name:&nbsp;</label><input type="text" th:field="*{name}" />
-
-        <span class="validationError"
-              th:if="#{fields.hasErrors('name')}"
-              th:errors="*{name}">descriptionError
-        </span>
-    </div>
-
-    <div class="form-group">
-        <button class="btn btn-primary btn-md" name="submit">Submit new Planning</button>
-    </div>
-
-
-</form>
-
-<div th:if="${message}!=null" class="well" th:text="${message}">
-    blablabla
-</div>
 
 <div class="table-striped well">
     <div th:each="planning: ${plannings}">
-         <div th:text="${planning.name}"></div>
+         <div th:text="${planning.name}">
+             <a th:href="@{/Detailsplanning(param1=${plannings.planningId})}"></a>
+         </div>
     </div>
 </div>
 </body>

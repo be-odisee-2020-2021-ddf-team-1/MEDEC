@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Planning</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<h1> Create a new  planning </h1>
+
+<form method="POST" th:action="@{/CreatePlanning}" th:object="${plannerData}" >
+    <!-- Action is de request mapper vanuit de controller en Object is dan de naam van het model die wordt meegeven
+      BELANGRIJK dat de namen goed overeenkomen - case sensitive!!!
+      -->
+
+    <div class="form-group">
+        <label>Name:&nbsp;</label><input type="text" th:field="*{name}" />
+
+        <span class="validationError"
+              th:if="#{fields.hasErrors('name')}"
+              th:errors="*{name}">descriptionError
+        </span>
+    </div>
+
+    <div class="form-group">
+        <a class="btn btn-primary" th:href="@{/}">return to overview</a>
+        <button class="btn btn-success btn-md" name="submit">Create a new Planning</button>
+    </div>
+
+
+
+</form>
+
+
+</body>
+</html>
