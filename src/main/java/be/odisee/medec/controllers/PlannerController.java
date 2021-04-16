@@ -87,6 +87,8 @@ public class PlannerController {
 
                 message = plannerService.CreatePlanner(plannerData);
                 plannerData = plannerService.prepareNewPlannerData();
+                return  "redirect:/planning/";
+
             }
 
         } catch (IllegalArgumentException e) {
@@ -95,7 +97,7 @@ public class PlannerController {
         prepareForm(plannerData, model);
         model.addAttribute("message", message);
 
-        return "CreatePlanning";
+        return  "/CreatePlanning";
 
     }
 
