@@ -16,22 +16,32 @@
 
     <tr>
         <th scope="row">Id</th>
-        <td th:text="*{planningId}"></td>
+        <td th:text="${plannerData.planningId}"></td>
     </tr>
     <tr>
        <th scope="row">Name</th>
-        <td th:text="*{name}"></td>
+        <td th:text="*{plannerData.name}"></td>
     </tr>
     <tr>
         <th scope="row">Actions</th>
-        <td> <a class="btn btn-warning" th:href=@"{/EditPlanning(param1='*{planningId}')}"></a></td>
-        <td> <a class="btn btn-danger" th:href=@"{/DeletePlanning(param1='*{planningId}')}"></a></td>
+        <td> <a class="btn btn-warning" th:href="@{Editplanning(planningId=${plannerData.planningId})}">Edit planning</a></td>
+
+
+        <td> <a class="btn btn-success" th:href="@{Createactiviteit(planningId=${plannerData.planningId})}">Add activiteit</a></td>
+
+
     </tr>
     </tbody>
 
 </table>
-<div class="mt-5">
-<a class="btn btn-primary" th:href="@{/}">return to overview</a>
+<div>
+
+
+        <a class="btn btn-danger" th:href="@{deletePlanning(planningId=${plannerData.planningId})}">Delete planning</a>
+
+
+
+<a class="btn btn-primary" th:href="@{Overview}">return to overview</a>
 </div>
 
 </body>

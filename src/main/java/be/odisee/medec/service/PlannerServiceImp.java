@@ -1,9 +1,12 @@
 package be.odisee.medec.service;
 
+import be.odisee.medec.dao.ActiviteitRepository;
+import be.odisee.medec.dao.MedewerkerRepository;
 import be.odisee.medec.dao.PlanningRepository;
+import be.odisee.medec.domain.Medewerker;
 import be.odisee.medec.domain.Planning;
+import be.odisee.medec.formdata.ActiviteitData;
 import be.odisee.medec.formdata.PlannerData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -12,18 +15,36 @@ import java.util.List;
 @Service
 public class PlannerServiceImp implements PlannerService {
 
-@Autowired
-    PlanningRepository planningRepository;
+final
+PlanningRepository planningRepository;
+final
+ActiviteitRepository activiteitRepository;
+final
+MedewerkerRepository medewerkerRepository;
 
-     //Create operation
 
+    public PlannerServiceImp(PlanningRepository planningRepository, ActiviteitRepository activiteitRepository, MedewerkerRepository medewerkerRepository) {
+        this.planningRepository = planningRepository;
+        this.activiteitRepository = activiteitRepository;
+        this.medewerkerRepository = medewerkerRepository;
+    }
+
+    //Create operation
     // Lege plannerData (form)
 
     @Override
+    public  ActiviteitData preparenewActiviteitData(){
+     ActiviteitData model = new ActiviteitData();
+     model.setMedewerkerList(getMedewerkers());
+        return model;
+    }
+
+
+
+
+    @Override
     public PlannerData prepareNewPlannerData(){
-
         return new PlannerData();
-
     }
 
 
@@ -99,6 +120,11 @@ public class PlannerServiceImp implements PlannerService {
         return planningRepository.findAllByOrderByName();
     }
 
+    @Override
+    public List<Medewerker> getMedewerkers(){
+        return medewerkerRepository.findAll();
+    }
+
     // Waarom ?
 
     // Delete operation
@@ -107,6 +133,7 @@ public class PlannerServiceImp implements PlannerService {
     public void deletePlanning(long planningId){
         Planning planning = planningRepository.findByplanningId(planningId);
         planningRepository.delete(planning);
+
     }
 
 

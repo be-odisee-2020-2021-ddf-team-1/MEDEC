@@ -11,10 +11,14 @@
 
 <h1> Edit your planning </h1>
 
-<form method="POST" th:action="@{/EditPlanning}" th:object="${plannerData}" >
+<form method="POST" th:action="@{Editplanning}" th:object="${plannerData}" >
     <!-- Action is de request mapper vanuit de controller en Object is dan de naam van het model die wordt meegeven
       BELANGRIJK dat de namen goed overeenkomen - case sensitive!!!
       -->
+
+    <div class="form-group">
+        <input type="hidden" th:field="*{planningId}" id="planningId">
+    </div>
 
     <div class="form-group">
         <label>Name:&nbsp;</label>
@@ -27,7 +31,7 @@
     </div>
 
     <div class="form-group">
-        <a class="btn btn-primary" th:href="@{/}"></a>
+        <a class="btn btn-primary" th:href="@{Overview}">Return to Overview</a>
         <button class="btn btn-success btn-md" name="submit">Edit Planning</button>
     </div>
 

@@ -11,13 +11,36 @@
 
 <h1> Welcome To an overview of all Plannings </h1>
 
+<br>
+
+<h2>Create a new planning</h2>
+<a class="btn btn-success" th:href="@{CreatePlanning}">Create a new planning </a>
+<br>
 
 <div class="table-striped well">
-    <div th:each="planning: ${plannings}">
-         <div th:text="${planning.name}">
-             <a th:href="@{/Detailsplanning(param1=${plannings.planningId})}"></a>
-         </div>
-    </div>
+
+    <thead>
+    <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr th:each="planning: ${plannings}">
+
+            <td > <p th:text="${planning.name}"></p>
+            </td>
+            <td>
+                <a class="btn btn-primary" th:href="@{Detailsplanning(planningId=${planning.planningId})}"> Details</a>
+            </td>
+        </tr>
+
+    </tbody>
+
 </div>
+
+
 </body>
 </html>
