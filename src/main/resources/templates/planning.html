@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>List of Plannings</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<h1> Welcome To an overview of all Plannings </h1>
+
+<br>
+
+<h2>Create a new planning</h2>
+<a class="btn btn-success" th:href="@{CreatePlanning}">Create a new planning </a>
+<br>
+
+<div class="table-striped well">
+
+    <thead>
+    <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        <tr th:each="planning: ${plannings}">
+
+            <td > <p th:text="${planning.name}"></p>
+            </td>
+            <td>
+                <a class="btn btn-primary" th:href="@{Detailsplanning(planningId=${planning.planningId})}"> Details</a>
+            </td>
+        </tr>
+
+    </tbody>
+
+</div>
+
+
+</body>
+</html>

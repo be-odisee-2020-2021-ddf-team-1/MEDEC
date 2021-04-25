@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Create an activity </title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<h1> Create a new activity </h1>
+
+<form method="POST" th:action="@{/CreateActivity}" th:object="${Activiteit}" >
+    <!-- Action is de request mapper vanuit de controller en Object is dan de naam van het model die wordt meegeven
+      BELANGRIJK dat de namen goed overeenkomen - case sensitive!!!
+      -->
+
+    <div class="form-group">
+        <label>Datum:&nbsp;</label>
+        <input type="date" th:field="*{datum}" />
+        <span class="validationError"
+              th:if="#{fields.hasErrors('datum')}"
+              th:errors="*{datum}">descriptionError
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label>Startijd:&nbsp;</label><input type="time" th:field="*{startTijd}" />
+
+        <span class="validationError"
+              th:if="#{fields.hasErrors('startTijd')}"
+              th:errors="*{startTijd}">descriptionError
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label>Eindtijd:&nbsp;</label><input type="time" th:field="*{eindTijd}" />
+
+        <span class="validationError"
+              th:if="#{fields.hasErrors('eindTijd')}"
+              th:errors="*{eindTijd}">descriptionError
+        </span>
+    </div>
+
+    <div class="form-group">
+    <select class="form-control" th:field="*{medewerker}"  id="dropOperator">
+        <option th:each="medewerker : ${mdwk}" th:value="${medewerker.medewerkerId}" th:text="${medewerker.name + ' - ' + medewerker.functie}"></option>
+    </select>
+    </div>
+
+
+    <div class="form-group">
+        <select th:field="*{type}">
+            <option th:value="'Opleiding'" th:text="Opleiding"></option>
+            <option th:value="'Assemblage'" th:text="Assemblage"></option>
+            <option th:value="'TestActiviteit'" th:text="TestActiviteit"></option>
+            <option th:value="'Levering'" th:text="Levering"></option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <a class="btn btn-primary" th:href="@{/}">return to planning </a>
+        <button class="btn btn-success btn-md" name="submit">Create a new Actvitity</button>
+    </div>
+
+
+
+</form>
+
+
+</body>
+</html>
