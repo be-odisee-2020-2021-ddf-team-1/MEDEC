@@ -4,6 +4,7 @@ import be.odisee.medec.domain.Medewerker;
 import be.odisee.medec.formdata.PlannerData;
 import be.odisee.medec.service.PlannerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -44,10 +45,23 @@ public class PlannerController {
     // Deleten via actions geen nieuwe pagina
     // Pagina voor details
 
+    public static String hash(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    @GetMapping("/login-error")
+    public String loginerror(Model model) {
+        model.addAttribute("error", true);
+        return "login";
+    }
+
     // overview van alle planningen
     @GetMapping("/Overview")
     public String showListPlanning(Model model){
         model.addAttribute("plannings",plannerService.getPlannings()) ;
+        System.out.printf("%s is {bcrypt}%s%n", "Jimmy123", hash("Jimmy123"));
+        System.out.printf("%s is {bcrypt}%s%n", "Jan123", hash("Jan123"));
+
         return "planning";
     }
 
@@ -99,6 +113,8 @@ public class PlannerController {
 
                 message = plannerService.CreatePlanner(plannerData);
                 plannerData = plannerService.prepareNewPlannerData();
+                return  "redirect:/planning/";
+
             }
 
         } catch (IllegalArgumentException ignored) {
