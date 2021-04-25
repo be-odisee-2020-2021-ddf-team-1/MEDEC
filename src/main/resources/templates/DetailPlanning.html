@@ -27,8 +27,8 @@
 
 </table>
 <div>
-    <a class="btn btn-warning" name="edit" th:href="@{Editplanning(planningId=${plannerData.planningId})}">Edit planning</a>
-    <a class="btn btn-danger" name="delete" th:href="@{deletePlanning(planningId=${plannerData.planningId})}">Delete planning</a>
+    <a class="btn btn-warning" th:id="edit" th:href="@{Editplanning(planningId=${plannerData.planningId})}">Edit planning</a>
+    <a class="btn btn-danger" id="delete" th:href="@{deletePlanning(planningId=${plannerData.planningId})}">Delete planning</a>
 </div>
 <div>
     <a class="btn btn-primary mt-md-5" th:href="@{Overview}"><i class="fa fa-arrow-left"></i>return to overview</a>
