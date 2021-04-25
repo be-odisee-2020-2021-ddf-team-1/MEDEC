@@ -7,17 +7,15 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
-<body>
+<body class="p-4 p-md-5">
 
 <h1> Welcome To an overview of all Plannings </h1>
 
 <br>
-
-<h2>Create a new planning</h2>
-<a class="btn btn-success" th:href="@{CreatePlanning}">Create a new planning </a>
+<a class="btn btn-success m-3" th:href="@{CreatePlanning}">Create a new planning</a>
 <br>
 
-<div class="table-striped well">
+<table class="table table-striped well w-75 p-3">
 
     <thead>
     <tr>
@@ -33,13 +31,13 @@
             <td > <p th:text="${planning.name}"></p>
             </td>
             <td>
-                <a class="btn btn-primary" th:href="@{Detailsplanning(planningId=${planning.planningId})}"> Details</a>
+                <a class="btn btn-primary" th:id="${planning.name}" th:href="@{Detailsplanning(planningId=${planning.planningId})}"> Details</a>
             </td>
         </tr>
 
     </tbody>
 
-</div>
+</table>
 
 
 </body>

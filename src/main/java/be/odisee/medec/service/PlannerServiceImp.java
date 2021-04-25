@@ -114,6 +114,11 @@ MedewerkerRepository medewerkerRepository;
         return planningRepository.findByplanningId(planningId);
 
     }
+    @Override
+    public Planning getPlanningByNaam(String planningNaam){
+
+        return  planningRepository.findByName(planningNaam);
+    }
 
     @Override
     public List<Planning> getPlannings(){

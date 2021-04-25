@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
-<body>
+<body class="p-4 p-md-5">
 
 <h1> Edit your planning </h1>
 
@@ -20,9 +20,9 @@
         <input type="hidden" th:field="*{planningId}" id="planningId">
     </div>
 
-    <div class="form-group">
-        <label>Name:&nbsp;</label>
-        <input type="text" th:field="*{name}" />
+    <div class="form-group w-50 p-3">
+        <label class="control-label">Name:&nbsp;</label>
+        <input class="form-control" type="text" th:field="*{name}" />
 
         <span class="validationError"
               th:if="#{fields.hasErrors('name')}"

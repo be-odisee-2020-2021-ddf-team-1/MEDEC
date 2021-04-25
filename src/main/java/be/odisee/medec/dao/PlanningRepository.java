@@ -14,4 +14,6 @@ public interface PlanningRepository extends CrudRepository<Planning,Long> {
 
      List<Planning> findAllByOrderByName();
 
+     Planning findByName(String name);
+
 }

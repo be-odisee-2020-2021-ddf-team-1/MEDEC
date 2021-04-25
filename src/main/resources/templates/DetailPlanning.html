@@ -7,11 +7,12 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
-<body>
+<body class="p-4 p-md-5">
 
 <h1> Welcome To Planning </h1>
 
-<table class="table">
+<a class="btn btn-success m-3" th:href="@{Createactiviteit(planningId=${plannerData.planningId})}">Add activiteit</a>
+<table class="table well w-75 p-3">
     <tbody>
 
     <tr>
@@ -22,26 +23,15 @@
        <th scope="row">Name</th>
         <td th:text="*{plannerData.name}"></td>
     </tr>
-    <tr>
-        <th scope="row">Actions</th>
-        <td> <a class="btn btn-warning" th:href="@{Editplanning(planningId=${plannerData.planningId})}">Edit planning</a></td>
-
-
-        <td> <a class="btn btn-success" th:href="@{Createactiviteit(planningId=${plannerData.planningId})}">Add activiteit</a></td>
-
-
-    </tr>
     </tbody>
 
 </table>
 <div>
-
-
-        <a class="btn btn-danger" th:href="@{deletePlanning(planningId=${plannerData.planningId})}">Delete planning</a>
-
-
-
-<a class="btn btn-primary" th:href="@{Overview}">return to overview</a>
+    <a class="btn btn-warning" name="edit" th:href="@{Editplanning(planningId=${plannerData.planningId})}">Edit planning</a>
+    <a class="btn btn-danger" name="delete" th:href="@{deletePlanning(planningId=${plannerData.planningId})}">Delete planning</a>
+</div>
+<div>
+    <a class="btn btn-primary mt-md-5" th:href="@{Overview}"><i class="fa fa-arrow-left"></i>return to overview</a>
 </div>
 
 </body>

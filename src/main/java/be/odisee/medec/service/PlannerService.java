@@ -18,6 +18,8 @@ public interface PlannerService {
 
      Planning getPlanningById(long planningId);
 
+     Planning getPlanningByNaam(String planningNaam);
+
      void deletePlanning(long planningId);
 
      List<Planning> getPlannings();
