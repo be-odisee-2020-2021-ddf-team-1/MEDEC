@@ -21,7 +21,6 @@ public interface BesteldToestelService {
     //BesteldToestel
     BesteldToestel getBesteldToestelById(long besteldToestelId);
 
-    BesteldToestel getBesteldToestelByNaam(String besteldToestelNaam);
 
     //List
     List<BesteldToestel> getBesteldeToestellen();

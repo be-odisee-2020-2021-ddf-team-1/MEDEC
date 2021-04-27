@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $.getJSON('http://localhost:8080/besteldtoestel/besteldetoestellen', function(data) {
+                console.log(data);
+                $.each(data, function(i, toestel) {
+                    console.log(toestel.besteldToestelId);
+                    let link="DetailBesteldToestel/"+toestel.besteldToestelId+".html";
+                    $('#listToestellen').append("<li> " + toestel.naam +
+                        "<button id='btnDetail'"+toestel.besteldToestelId+" class='btnButtons' onclick=window.location.href='DetailBesteldToestel/"+toestel.besteldToestelId+".html'>Details</button>" +
+                       "<button id='btnDelete'"+toestel.besteldToestelId+">Delete</button>"+
+                        "</li>");
+                })
+            });
+        })
+    </script>
+</head>
+<body>
+<h1>Overview</h1>
+<button id=btnNewBesteldToestel onclick="window.location.href='CreateBesteldToestel.html'">Create</button>
+<ul id="listToestellen"></ul>
+
+</body>
+</html>

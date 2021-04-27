@@ -4,16 +4,20 @@ import be.odisee.medec.dao.BesteldToestelRepository;
 import be.odisee.medec.domain.BesteldToestel;
 import be.odisee.medec.domain.Planning;
 import be.odisee.medec.formdata.BesteldToestelData;
+import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@Service("besteldToestelService")
 public class BesteldToestelServiceImp implements  BesteldToestelService {
     final
     BesteldToestelRepository besteldToestelRepository;
-    public BesteldToestelServiceImp(BesteldToestelRepository besteldToestelRepository1){
-        this.besteldToestelRepository = besteldToestelRepository1;
+
+
+    public BesteldToestelServiceImp(BesteldToestelRepository besteldToestelRepository) {
+        this.besteldToestelRepository = besteldToestelRepository;
     }
+
     @Override
     public void deleteBesteldToestel(long besteldToestelId) {
 
@@ -26,13 +30,9 @@ public class BesteldToestelServiceImp implements  BesteldToestelService {
 
     @Override
     public BesteldToestel getBesteldToestelById(long besteldToestelId) {
-        return null;
+        return besteldToestelRepository.findByBesteldToestelId(besteldToestelId);
     }
 
-    @Override
-    public BesteldToestel getBesteldToestelByNaam(String besteldToestelNaam) {
-        return null;
-    }
 
     @Override
     public List<BesteldToestel> getBesteldeToestellen() {

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Detailpagina</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+console.log(window.location.href);
+let id=window.location.href.replace("http://localhost:8080/besteldtoestel/DetailBesteldToestel/","");
+id=id.replace(".html","");
+    $(function(){
+        $.getJSON('http://localhost:8080/besteldtoestel/besteldtoesteldetails/'+id, function(data) {
+                $('#naamToestel').html(data.naam);
+            console.log(data);
+        });
+    })
+</script>
+<h2>Details van</h2>
+<h3 id="naamToestel"></h3>
+<button>Update</button>
+</body>
+</html>

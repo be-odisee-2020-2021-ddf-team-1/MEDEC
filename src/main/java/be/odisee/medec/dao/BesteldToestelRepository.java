@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BesteldToestelRepository extends CrudRepository<BesteldToestel,Long> {
     List<BesteldToestel> findAll();
+
+    BesteldToestel findByBesteldToestelId(long besteldToestelId);
 }
