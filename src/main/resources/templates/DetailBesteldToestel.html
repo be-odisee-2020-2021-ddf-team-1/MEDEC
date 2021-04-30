@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit toestel</title>
 </head>
 <body>
 <h1>Detailpagina</h1>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script>
     console.log(window.location.href);
-    let id = window.location.href.replace("http://localhost:8080/besteldtoestel/DetailBesteldToestel/", "");
+    let url = window.location.href.toString();
+    let id = url.replace("http://localhost:8080/besteldtoestel/DetailBesteldToestel/", "");
     id = id.replace(".html", "");
     $(function () {
         $.getJSON('http://localhost:8080/besteldtoestel/besteldtoesteldetails/' + id, function (data) {
@@ -21,35 +22,34 @@
             console.log(data);
         });
     })
-
     function edit() {
+        let toestelId = parseInt(id)
         let naam = $("#naam").val().toString();
         let aankoopdatum = new Date($("#aankoopdatum").val()).getTime();
-
         let prijs = parseFloat($("#prijs").val());
-        console.log(aankoopdatum);
 
         $.ajax({
             type: 'PUT',
-            url: 'http://localhost:8080/besteldtoestel/updatebesteldtoestel/'+id,
-            contentType: 'application/json',
+            url: 'http://localhost:8080/besteldtoestel/updatebesteldtoestel',
+            //contentType: 'application/json',
             data: {
-                id:id,
+                id:toestelId,
                 aankoopdatumMillis:aankoopdatum,
                 naam:naam,
                 prijs:prijs
             },
-        }).done(function () {
-            console.log('SUCCESS');
-        }).fail(function (msg) {
-            console.log('FAIL');
-        }).always(function (msg) {
-            console.log('ALWAYS');
+            success: function (result) {
+                window.location.href ="http://localhost:8080/besteldtoestel/OverviewBesteldeToestellen.html";
+                console.log('SUCCESS');
+            },
+            error: function (jqXhr, textStatus, errorMessag) {
+                console.log('ERROR');
+            }
         });
     }
 </script>
 <h2>Details van toestel <span class="naamToestel"></span></h2>
-<form onsubmit="edit()">
+<form id="edit-form" onsubmit="edit()">
     <label for="naam">Naam:</label><br>
     <input id="naam" name="naam" placeholder="Toestelnaam" type="text"><br>
     <label for="aankoopdatum">AankoopDatum:</label><br>
@@ -58,5 +58,6 @@
     <input id="prijs" name="prijs" step="any" type="number"><br><br>
     <input type="submit" value="Update">
 </form>
+
 </body>
 </html>

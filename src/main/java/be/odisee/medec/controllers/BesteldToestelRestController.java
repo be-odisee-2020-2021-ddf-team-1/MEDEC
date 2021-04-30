@@ -52,19 +52,7 @@ public class BesteldToestelRestController {
 
         besteldToestelService.deleteBesteldToestel(id);
     }
-
-    //@RequestMapping(value={"/deleteBesteldToestel/{id}"},method=RequestMethod.GET)
-    //public @ResponseBody BesteldToestel getToestel(@PathVariable("id") Integer id) {
-    // System.out.println("id = " + id);
-    //    return besteldToestelService.getBesteldToestelById(id);
-    //}
-    //@RequestMapping(value={"/createBesteldToestel/"},method=RequestMethod.GET)
-    //public @ResponseBody BesteldToestel getToestel(@PathVariable("id") Integer id) {
-    //    System.out.println("id = " + id);
-    //    return besteldToestelService.getBesteldToestelById(id);
-    //}
-
-
+    
     /*// REST POST ... Aanmaken van een bestelde toestel
     @RequestMapping(value={"/createBesteldToestel"},method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -88,8 +76,7 @@ public class BesteldToestelRestController {
             toestel.setAankoopdatum(aankoopdatum);
         }
         toestel.setPrijs(prijs);
-        besteldToestelService.createBesteldToestel(toestel);
-        return toestel;
+        return besteldToestelService.createBesteldToestel(toestel);
     }
 
 
@@ -104,9 +91,9 @@ public class BesteldToestelRestController {
 
     //Test werkt zonder prijs
     // REST PUT ... breng de toestand van bestaande resource van de client naar de server
-    @RequestMapping(value={"/updatebesteldtoestel/{id}"},method=RequestMethod.PUT)
+    @RequestMapping(value={"/updatebesteldtoestel"},method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putToestel(@PathVariable("id") Integer id, String naam, Double prijs, Long aankoopdatumMillis){
+    public void putToestel( Integer id, String naam, Double prijs, Long aankoopdatumMillis){
         BesteldToestel toestel = new BesteldToestel();
         toestel.setBesteldToestelId(id);
         toestel.setNaam(naam);
@@ -117,8 +104,5 @@ public class BesteldToestelRestController {
         toestel.setPrijs(prijs);
         besteldToestelService.UpdateBesteldToestel(toestel);
     }
-
-
-
 
 }

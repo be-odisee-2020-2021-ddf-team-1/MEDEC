@@ -11,7 +11,7 @@
                 $.each(data, function(i, toestel) {
                     console.log(toestel.besteldToestelId);
                     let link="DetailBesteldToestel/"+toestel.besteldToestelId+".html";
-                    $('#listToestellen').append("<li> " + toestel.naam +
+                    $('#listToestellen').append("<li> " + toestel.naam + "--"+
                         "<button id='btnDetail'"+toestel.besteldToestelId+" class='btnButtons' onclick=window.location.href='DetailBesteldToestel/"+toestel.besteldToestelId+".html'>Details</button>" +
                        "<button id='btnDelete'"+toestel.besteldToestelId+">Delete</button>"+
                         "</li>");

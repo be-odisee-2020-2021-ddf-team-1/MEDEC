@@ -9,18 +9,18 @@
 
         function create() {
             let naam = $("#naam").val().toString();
-            let aankoopdatum = new Date($("#aankoopdatum").val()).getTime();
+            let aankoopdatum = $("#aankoopdatum").val();
+            if (isNaN(aankoopdatum)) aankoopdatum = new Date(aankoopdatum).getTime();
             let prijs = parseFloat($("#prijs").val());
             console.log(aankoopdatum);
             $.post('http://localhost:8080/besteldtoestel/createBesteldToestel', {
-                    aankoopdatumMillis: aankoopdatum,
-                    naam: naam,
-                    prijs: prijs
-                },
-                function (data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
-                    console.log(data);
-                });
+                aankoopdatumMillis: aankoopdatum,
+                naam: naam,
+                prijs: prijs
+            }).done(function () {
+                window.location.href = "http://localhost:8080/besteldtoestel/OverviewBesteldeToestellen.html";
+                console.log('SUCCESS');
+            });
         }
     </script>
 </head>
