@@ -8,18 +8,55 @@
 <h1>Detailpagina</h1>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script>
-console.log(window.location.href);
-let id=window.location.href.replace("http://localhost:8080/besteldtoestel/DetailBesteldToestel/","");
-id=id.replace(".html","");
-    $(function(){
-        $.getJSON('http://localhost:8080/besteldtoestel/besteldtoesteldetails/'+id, function(data) {
-                $('#naamToestel').html(data.naam);
+    console.log(window.location.href);
+    let id = window.location.href.replace("http://localhost:8080/besteldtoestel/DetailBesteldToestel/", "");
+    id = id.replace(".html", "");
+    $(function () {
+        $.getJSON('http://localhost:8080/besteldtoestel/besteldtoesteldetails/' + id, function (data) {
+            $('.naamToestel').html(data.naam);
+            $('#naam').val(data.naam);
+            $('#aankoopdatum').val(data.aankoopdatum);
+            $('#prijs').val(data.prijs);
+
             console.log(data);
         });
     })
+
+    function edit() {
+        let naam = $("#naam").val().toString();
+        let aankoopdatum = new Date($("#aankoopdatum").val()).getTime();
+
+        let prijs = parseFloat($("#prijs").val());
+        console.log(aankoopdatum);
+
+        $.ajax({
+            type: 'PUT',
+            url: 'http://localhost:8080/besteldtoestel/updatebesteldtoestel/'+id,
+            contentType: 'application/json',
+            data: {
+                id:id,
+                aankoopdatumMillis:aankoopdatum,
+                naam:naam,
+                prijs:prijs
+            },
+        }).done(function () {
+            console.log('SUCCESS');
+        }).fail(function (msg) {
+            console.log('FAIL');
+        }).always(function (msg) {
+            console.log('ALWAYS');
+        });
+    }
 </script>
-<h2>Details van</h2>
-<h3 id="naamToestel"></h3>
-<button>Update</button>
+<h2>Details van toestel <span class="naamToestel"></span></h2>
+<form onsubmit="edit()">
+    <label for="naam">Naam:</label><br>
+    <input id="naam" name="naam" placeholder="Toestelnaam" type="text"><br>
+    <label for="aankoopdatum">AankoopDatum:</label><br>
+    <input id="aankoopdatum" name="aankoopdatum" type="date"><br>
+    <label for="prijs">Prijs:</label><br>
+    <input id="prijs" name="prijs" step="any" type="number"><br><br>
+    <input type="submit" value="Update">
+</form>
 </body>
 </html>

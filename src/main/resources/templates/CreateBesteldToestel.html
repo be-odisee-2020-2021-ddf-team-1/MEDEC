@@ -2,9 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Nieuw bestelde toestel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        let besteldToestel;
+
+        function create() {
+            let naam = $("#naam").val().toString();
+            let aankoopdatum = new Date($("#aankoopdatum").val()).getTime();
+            let prijs = parseFloat($("#prijs").val());
+            console.log(aankoopdatum);
+            $.post('http://localhost:8080/besteldtoestel/createBesteldToestel', {
+                    aankoopdatumMillis: aankoopdatum,
+                    naam: naam,
+                    prijs: prijs
+                },
+                function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                    console.log(data);
+                });
+        }
+    </script>
 </head>
 <body>
 <h1>Create new toestel</h1>
+<main>
+    <form onsubmit="create()">
+        <label for="naam">Naam:</label><br>
+        <input type="text" id="naam" name="naam" placeholder="Toestelnaam"><br>
+        <label for="aankoopdatum">AankoopDatum:</label><br>
+        <input type="date" id="aankoopdatum" name="aankoopdatum"><br>
+        <label for="prijs">Prijs:</label><br>
+        <input type="number" step="any" id="prijs" name="prijs"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</main>
 </body>
 </html>

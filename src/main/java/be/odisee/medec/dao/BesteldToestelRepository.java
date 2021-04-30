@@ -10,4 +10,5 @@ public interface BesteldToestelRepository extends CrudRepository<BesteldToestel,
     List<BesteldToestel> findAll();
 
     BesteldToestel findByBesteldToestelId(long besteldToestelId);
+
 }

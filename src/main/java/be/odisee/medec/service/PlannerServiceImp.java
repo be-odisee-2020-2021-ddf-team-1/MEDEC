@@ -39,9 +39,6 @@ MedewerkerRepository medewerkerRepository;
         return model;
     }
 
-
-
-
     @Override
     public PlannerData prepareNewPlannerData(){
         return new PlannerData();

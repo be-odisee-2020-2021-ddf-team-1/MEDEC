@@ -1,11 +1,8 @@
 package be.odisee.medec.service;
 
 import be.odisee.medec.domain.BesteldToestel;
-import be.odisee.medec.domain.Medewerker;
 import be.odisee.medec.domain.Planning;
-import be.odisee.medec.formdata.ActiviteitData;
 import be.odisee.medec.formdata.BesteldToestelData;
-import be.odisee.medec.formdata.PlannerData;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,7 +13,10 @@ public interface BesteldToestelService {
     void deleteBesteldToestel(long besteldToestelId);
 
     //strings
-    String createBesteldToestel(@Valid BesteldToestelData besteldToestelData);
+    BesteldToestel createBesteldToestelData(@Valid BesteldToestelData besteldToestelData);
+
+    //strings
+    BesteldToestel createBesteldToestel( BesteldToestel besteldToestel);
 
     //BesteldToestel
     BesteldToestel getBesteldToestelById(long besteldToestelId);
@@ -25,11 +25,13 @@ public interface BesteldToestelService {
     //List
     List<BesteldToestel> getBesteldeToestellen();
 
-
     //BesteldToestelData
     BesteldToestelData prepareNewBesteldToestelData();
 
-    BesteldToestelData prepareEditBesteldToestelData(Planning planning);
+    BesteldToestelData prepareEditBesteldToestelData(BesteldToestel toestel);
 
     BesteldToestelData prepareBesteldToestelDataToEdit(long plannerId);
+
+    void UpdateBesteldToestel(BesteldToestel toestel);
+
 }
