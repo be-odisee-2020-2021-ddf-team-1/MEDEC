@@ -1,20 +1,26 @@
 package be.odisee.medec.controllers;
 
 import be.odisee.medec.domain.BesteldToestel;
+import be.odisee.medec.formdata.BesteldToestelData;
 import be.odisee.medec.service.BesteldToestelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 
+//@RestController
 @Controller
-@RequestMapping("/besteldtoestel")
+@CrossOrigin(origins = "http://localhost:8888", maxAge = 3600, allowCredentials = "true")
+@RequestMapping(path = "/besteldtoestel",produces = "application/json")
 public class BesteldToestelRestController {
     @Autowired
     protected BesteldToestelService besteldToestelService; // ready for dependency injection
@@ -38,7 +44,6 @@ public class BesteldToestelRestController {
     @RequestMapping(value={"/besteldetoestellen"},method= RequestMethod.GET)
     public @ResponseBody
     List<BesteldToestel> getBesteldeToestellen(){
-
         return besteldToestelService.getBesteldeToestellen();
     }
     @RequestMapping(value={"/besteldtoesteldetails/{id}"},method=RequestMethod.GET)
@@ -46,26 +51,53 @@ public class BesteldToestelRestController {
         System.out.println("id = " + id);
         return besteldToestelService.getBesteldToestelById(id);
     }
-    @RequestMapping(value={"/deleteBesteldToestel/{id}"},method=RequestMethod.DELETE)
+    // Test request
+    @RequestMapping(value={"/deleteBesteldToestel"},method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePersoon(@PathVariable("id") Integer id){
-
+    public void deleteToestel(Integer id){
         besteldToestelService.deleteBesteldToestel(id);
     }
-    
-    /*// REST POST ... Aanmaken van een bestelde toestel
-    @RequestMapping(value={"/createBesteldToestel"},method=RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody BesteldToestel createtoestel( @RequestBody BesteldToestel toestel)
-            throws BindException {
 
-        besteldToestelService.createBesteldToestel(toestel);
-        return toestel;
-    }*/
+    @PostMapping(path = "/deleteBesteldToestel", consumes = "application/json")
+    public String deleteToestel(@RequestBody BesteldToestel toestel) {
+
+        try {
+            besteldToestelService.deleteBesteldToestel(toestel.getbesteldToestelId());
+        } catch (Exception e) {
+            return (e.getMessage());
+        }
+        return "Successfully deleted entry "+toestel.getNaam();
+    }
+    
+    // REST POST ... Aanmaken van een bestelde toestel met doorgegeven object
+    @PostMapping(path={"/createBesteldToestel"},consumes = "application/json")
+    public String processNieuwtoestel(@Valid @RequestBody BesteldToestelData toestelData, Errors errors) {
+
+        StringBuilder message=new StringBuilder();
+
+        try {
+            // Are there any input validation errors detected by JSR 380 bean validation?
+            if (errors.hasErrors() ) {
+                message = new StringBuilder("Correct input errors, please: <br>");
+                for (ObjectError objectError: errors.getAllErrors()) {
+                    message.append(objectError.getDefaultMessage()).append("<br>");
+                }
+                throw new IllegalArgumentException();
+            }
+
+            // Now that the input seems to be OK, let's create a new entry or update/delete an existing entry
+            message = new StringBuilder(besteldToestelService.createBesteldToestelData(toestelData));
+
+        } catch (IllegalArgumentException e) {
+            // Nothing special needs to be done
+        }
+        return message.toString();
+
+    }
 
     //Test Request werkt
     // REST POST ... Aanmaken van een bestelde toestel
-    @RequestMapping(value={"/createBesteldToestel"},method=RequestMethod.POST)
+/*    @RequestMapping(value={"/createBesteldToestel"},method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody BesteldToestel createtoestel(String naam, double prijs, Long aankoopdatumMillis)
             throws BindException {
@@ -77,7 +109,7 @@ public class BesteldToestelRestController {
         }
         toestel.setPrijs(prijs);
         return besteldToestelService.createBesteldToestel(toestel);
-    }
+    }*/
 
 
     /*/ REST PUT ... breng de toestand van bestaande resource van de client naar de server

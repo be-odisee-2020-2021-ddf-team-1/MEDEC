@@ -13,7 +13,7 @@ public interface BesteldToestelService {
     void deleteBesteldToestel(long besteldToestelId);
 
     //strings
-    BesteldToestel createBesteldToestelData(@Valid BesteldToestelData besteldToestelData);
+    String createBesteldToestelData(@Valid BesteldToestelData besteldToestelData);
 
     //strings
     BesteldToestel createBesteldToestel( BesteldToestel besteldToestel);

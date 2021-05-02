@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.sql.Date;
 import java.util.List;
 @Service("besteldToestelService")
 public class BesteldToestelServiceImp implements  BesteldToestelService {
@@ -22,12 +23,14 @@ public class BesteldToestelServiceImp implements  BesteldToestelService {
 
     @Override
     public void deleteBesteldToestel(long besteldToestelId) {
-
+        BesteldToestel toestel = besteldToestelRepository.findByBesteldToestelId(besteldToestelId);
+        if (toestel != null)
+        besteldToestelRepository.delete(toestel);
     }
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED,readOnly=false)
-    public BesteldToestel createBesteldToestelData(@Valid BesteldToestelData toestelData) {
+    public String createBesteldToestelData(@Valid BesteldToestelData toestelData) {
         BesteldToestel toestel;
 
         if(toestelData.getBesteldToestelId() == 0)
@@ -40,10 +43,13 @@ public class BesteldToestelServiceImp implements  BesteldToestelService {
         }
         // toestel ppts aanvullen
         toestel.setNaam(toestelData.getNaam());
-        toestel.setAankoopdatum(toestelData.getAankoopdatum());
+        Date aankoopdatum = new Date(toestelData.getAankoopdatum());
+        toestel.setAankoopdatum(aankoopdatum);
         toestel.setPrijs(toestelData.getPrijs());
         // bestelde toestel bewaren
-        return besteldToestelRepository.save(toestel);
+        besteldToestelRepository.save(toestel);
+
+        return "Toestel "+ toestel.getNaam() + " with id - " + toestel.getbesteldToestelId() + " has been correctly processed";
     }
 
     @Transactional(propagation= Propagation.REQUIRED,readOnly=false)
@@ -79,7 +85,7 @@ public class BesteldToestelServiceImp implements  BesteldToestelService {
         if(toestel != null){
             toestelData.setBesteldToestelId(toestel.getbesteldToestelId());
             toestelData.setNaam(toestel.getNaam());
-            toestelData.setAankoopdatum(toestel.getAankoopdatum());
+            toestelData.setAankoopdatum(toestel.getAankoopdatum().getTime());
             toestelData.setPrijs(toestel.getPrijs());
         }
         else{
