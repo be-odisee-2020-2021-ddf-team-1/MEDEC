@@ -8,23 +8,24 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name ="BESTELDTOESTEL")
 @Data
 @RequiredArgsConstructor
 @XmlRootElement(name="besteldtoestel")
-@NoArgsConstructor(force=true)
+//@NoArgsConstructor(force=true)
 public class BesteldToestel implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private final long besteldToestelId;
+    private long besteldToestelId;
 
     private String naam;
 
     private Date aankoopdatum;
+
 
     private double prijs;
 

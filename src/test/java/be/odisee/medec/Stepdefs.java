@@ -54,12 +54,10 @@ public class Stepdefs {
         driver.findElement(By.id(knopNaam)).click();
         }
 
-
     }
     @When("^de planner vult \"([^\"]*)\" in het name veld$")
     public void dePlannerVultInHetNameVeld(String value) throws Throwable {
         driver.findElement(By.id("name")).sendKeys(value);
-
     }
     @When("^de planner terug keert naar de details pagina$")
     public void dePlannerTerugKeertNaarDeDetailsPagina() {
@@ -90,9 +88,6 @@ public class Stepdefs {
     }
     @Then("^de planner moet de bevestiging \"([^\"]*)\" kunnen zien$")
     public void dePlannerMoetDeBevestigingKunnenZien(String bevestigingTekst) throws Throwable {
-/*        // wacht tot de bevestigings pagina geladen is
-        new WebDriverWait(driver, 10).until(ExpectedConditions
-                .textToBePresentInElementLocated(By.tagName("body"), "Welcome To an overview of all Plannings"));*/
         String bodyText = driver.findElement(By.tagName("body")).getText();
         Assert.assertTrue("Did not find this text: "+bevestigingTekst+"\n",bodyText.contains(bevestigingTekst));
     }
