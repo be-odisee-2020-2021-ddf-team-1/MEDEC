@@ -1,5 +1,6 @@
 package be.odisee.medec.controllers;
 
+import be.odisee.medec.dao.BesteldToestelRepository;
 import be.odisee.medec.domain.BesteldToestel;
 import be.odisee.medec.formdata.BesteldToestelData;
 import be.odisee.medec.service.BesteldToestelService;
@@ -17,11 +18,13 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
-//@RestController
-@Controller
+@RestController
 @CrossOrigin(origins = "http://localhost:8888", maxAge = 3600, allowCredentials = "true")
 @RequestMapping(path = "/besteldtoestel",produces = "application/json")
 public class BesteldToestelRestController {
+
+    @Autowired
+    private BesteldToestelRepository besteldToestelRepo;
     @Autowired
     protected BesteldToestelService besteldToestelService; // ready for dependency injection
 
@@ -46,27 +49,37 @@ public class BesteldToestelRestController {
     List<BesteldToestel> getBesteldeToestellen(){
         return besteldToestelService.getBesteldeToestellen();
     }
+
     @RequestMapping(value={"/besteldtoesteldetails/{id}"},method=RequestMethod.GET)
     public @ResponseBody BesteldToestel getToestel(@PathVariable("id") Integer id) {
         System.out.println("id = " + id);
         return besteldToestelService.getBesteldToestelById(id);
     }
+
+    @GetMapping("/{id}")
+    public BesteldToestel getToestelById(@PathVariable("id") Long id) {
+
+        if (besteldToestelRepo.findById(id).isPresent()) {
+            return besteldToestelRepo.findById(id).get();
+        } else {
+            return  null;
+        }
+    }
     // Test request
-    @RequestMapping(value={"/deleteBesteldToestel"},method=RequestMethod.DELETE)
+/*    @RequestMapping(value={"/deleteBesteldToestel"},method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteToestel(Integer id){
         besteldToestelService.deleteBesteldToestel(id);
-    }
+    }*/
 
-    @PostMapping(path = "/deleteBesteldToestel", consumes = "application/json")
-    public String deleteToestel(@RequestBody BesteldToestel toestel) {
-
+    @PostMapping(path = "/deleteBesteldToestel",consumes = "application/json")
+    public String deleteToestel( @RequestBody BesteldToestel toestel) {
         try {
             besteldToestelService.deleteBesteldToestel(toestel.getbesteldToestelId());
         } catch (Exception e) {
-            return (e.getMessage());
+            return "Something went wrong :"+ e.getMessage();
         }
-        return "Successfully deleted entry "+toestel.getNaam();
+        return "Successfully deleted entry with id "+toestel.getbesteldToestelId();
     }
     
     // REST POST ... Aanmaken van een bestelde toestel met doorgegeven object
